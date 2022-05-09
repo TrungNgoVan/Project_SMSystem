@@ -1,5 +1,6 @@
 #pragma once
-
+#include<string>
+using namespace std;
 class User
 {
 };
@@ -18,6 +19,10 @@ class AcademicStaff : public User
 
 class Course
 {
+private: 
+    string codeCourse;
+    string yearCourse;
+    
 };
 
 class Attendance

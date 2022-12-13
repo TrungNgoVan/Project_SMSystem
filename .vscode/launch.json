@@ -7,13 +7,11 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "cwd": "d:/Project_SMSystem",
-      "environment": [],
-      "program": "d:/Project_SMSystem/build/Debug/outDebug",
-      "internalConsoleOptions": "openOnSessionStart",
+      "externalConsole": true,
+      "cwd": "c:/Users/nvtrung/Documents/Backup/Code/Github/Project_SMSystem",
+      "program": "c:/Users/nvtrung/Documents/Backup/Code/Github/Project_SMSystem/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "C:/MinGW/bin/gdb.exe",
-      "console": "integratedTerminal",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",

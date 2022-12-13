@@ -29,5 +29,6 @@
   ],
   "files.associations": {
     "ostream": "cpp"
-  }
+  },
+  "C_Cpp_Runner.useMsvc": false
 }

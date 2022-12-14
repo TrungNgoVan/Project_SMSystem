@@ -28,23 +28,6 @@ public:
     }
 };
 
-// class Date
-// {
-// private:
-//     int _day;
-//     int _month;
-//     int _year;
-// public:
-// };
-
-// class Time
-// {
-// private:
-//     int _minute;
-//     int _hour;
-// public:
-// };
-
 class Course
 {
 private:

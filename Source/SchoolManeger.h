@@ -32,8 +32,8 @@ public:
     void transferStudent(Student*, Course*, Course*);
 
     void importScoreByCSV();
-
-    void importCourseByCSV(); // CSV file
+    void importCourseByCSV();// CSV file
+    
     Course* createCourse();
     void addCourse(Course*);
     void editInformationCourse(Course*);
@@ -47,7 +47,4 @@ public:
     void viewStudentListOfCourse(Course*);
 
     void exportAttendanceListOfCourse(Course*); // CSV file
-
-
-
 };

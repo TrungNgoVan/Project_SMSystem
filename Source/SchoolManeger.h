@@ -9,19 +9,24 @@
 #include "Lecturer.h"
 
 using namespace std;
-
 class SchoolManager{
 private:
-    map<string, Score> scoreBoardStudent;
-    map<string, Score> scoreBroadCourse;
-    vector<Course> dataCourse;
-    vector<Score> dataScore;
-    vector<Student> dataStudent;
-    vector<Lecturer> dataLecturer;
+    map<string, vector<Score>> _scoreBoardStudent;
+    map<string, vector<Score>> _scoreBroadCourse;
+    vector<Course> _dataCourse;
+    vector<Score> _dataScore;
+    vector<Student> _dataStudent;
+    vector<Lecturer> _dataLecturer;
 public:
+    SchoolManager();
+    ~SchoolManager();
+
+    void setScoreBoardStudent(map<string, vector<Score>>);
+    void setScoreBoardCourse(map<string, vector<Score>>);
+
     // Student
-    void viewCheckInResult(Student*);
-    void viewScoreBoard(Student*);
+    // void viewCheckInResult(Student*);
+    void studentViewScoreBoard(Student*);
     void viewCourseBoard(Student*);
 
     //Staff

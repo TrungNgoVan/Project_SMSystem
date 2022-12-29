@@ -8,6 +8,8 @@ class Student : Person {
 private:
     string _studentID;
 public:
+    Student();
+    ~Student();
     string getStudentID();
     void setStudentID(string);
 };

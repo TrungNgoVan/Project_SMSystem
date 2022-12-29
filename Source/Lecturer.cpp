@@ -3,6 +3,14 @@
 
 using namespace std;
 
+Lecturer::Lecturer(){
+    this->_lecturerID = "L0000001";
+}
+
+Lecturer::~Lecturer(){
+    
+}
+
 string Lecturer::getLecturerID(){
     return this->_lecturerID;
 }

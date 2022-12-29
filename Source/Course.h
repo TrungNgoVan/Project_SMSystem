@@ -17,7 +17,6 @@ private:
     string _dayOfWeek;
 public: // Constructor & Destructor
     Course();
-    Course(/*parameter*/);
     ~Course();
 public: // Getter & Setter
     void setCourseID(string);

@@ -6,3 +6,5 @@
 #include "Course.h"
 #include "Helper.h"
 #include "Person.h"
+#include "Score.h"
+#include "SchoolManeger.h"

@@ -3,6 +3,14 @@
 
 using namespace std;
 
+Student::Student(){
+    this->_studentID = "00000001";
+}
+
+Student::~Student(){
+    
+}
+
 string Student::getStudentID(){
     return this->_studentID;
 }

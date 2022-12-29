@@ -1,7 +1,15 @@
 #include <string>
-#include <Person.h>
+#include "Person.h"
 
 using namespace std;
+
+Person::Person(){
+
+}
+
+Person::~Person(){
+    
+}
 
 string Person::getEmail(){
     return this->_email;

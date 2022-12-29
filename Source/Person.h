@@ -10,8 +10,10 @@ private:
     string _email;
     string _phoneNumber;
     string _password;
-public: //Constructor & destructor
 public:
+    Person();
+    ~Person();
+
     void setPhoneNumber(string);
     string getPhoneNumber();
 

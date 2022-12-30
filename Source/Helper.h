@@ -1,7 +1,8 @@
 #pragma once
 #include <time.h>
 
-class Helper{
+class Helper
+{
 public:
     static void start();
 };

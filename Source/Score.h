@@ -3,7 +3,8 @@
 
 using namespace std;
 
-class Score{
+class Score
+{
 private:
     int _year;
     int _semester;
@@ -11,12 +12,14 @@ private:
     float _midtermScore;
     float _labScore;
     float _finalScore;
+
 public:
     Score();
     ~Score();
 
     int getYear();
     void setYear(int);
-    string gerCourseID();
+    string getCourseID();
+    void setCourseID(string);
     void displayScore();
 };

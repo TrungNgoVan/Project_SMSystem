@@ -3,7 +3,8 @@
 
 using namespace std;
 
-Score::Score(){
+Score::Score()
+{
     this->_year = 2000;
     this->_semester = 1;
     this->_courseID = "MTH00000";
@@ -12,27 +13,32 @@ Score::Score(){
     this->_finalScore = 0;
 }
 
-Score::~Score(){
-    
+Score::~Score()
+{
 }
 
-int Score::getYear(){
+int Score::getYear()
+{
     return this->_year;
 }
 
-void Score::setYear(int year){
+void Score::setYear(int year)
+{
     this->_year = year;
 }
 
-string Score::gerCourseID(){
+string Score::getCourseID()
+{
     return this->_courseID;
 }
 
-void Score::displayScore(){
+void Score::setCourseID(string courseID){
+    this->_courseID = courseID;
+}
+
+void Score::displayScore()
+{
     cout << "Midterm score: " << this->_midtermScore << "\n";
     cout << "Lab score: " << this->_labScore << "\n";
     cout << "Final score: " << this->_finalScore << "\n";
 }
-
-
-

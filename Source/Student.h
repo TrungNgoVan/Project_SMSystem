@@ -4,12 +4,13 @@
 
 using namespace std;
 
-class Student : Person {
+class Student : public Person {
 private:
     string _studentID;
 public:
     Student();
     ~Student();
+    int getType();
     string getStudentID();
     void setStudentID(string);
 };

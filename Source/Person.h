@@ -10,9 +10,16 @@ private:
     string _email;
     string _phoneNumber;
     string _password;
+// protected:
+//     int _type;
+//     // 1 - Student
+//     // 2 - Lecturer
+
 public:
     Person();
     ~Person();
+
+    virtual int getType() = 0;
 
     void setPhoneNumber(string);
     string getPhoneNumber();

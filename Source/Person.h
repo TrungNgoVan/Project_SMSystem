@@ -2,6 +2,12 @@
 #include <string>
 using namespace std;
 
+enum Type {
+    studentCode = 1,
+    lecturerCode = 2,
+    staffCode = 3
+};
+
 class Person
 {
 private:
@@ -10,16 +16,13 @@ private:
     string _email;
     string _phoneNumber;
     string _password;
-// protected:
-//     int _type;
-//     // 1 - Student
-//     // 2 - Lecturer
 
 public:
     Person();
     ~Person();
 
     virtual int getType() = 0;
+    virtual string getID() = 0;
 
     void setPhoneNumber(string);
     string getPhoneNumber();

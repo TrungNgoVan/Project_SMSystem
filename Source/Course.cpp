@@ -18,6 +18,19 @@ Course::Course()
     this->_dayOfWeek = "Monday";
 }
 
+Course::Course(string courseID, string courseName, string lecturerID){
+    this->_courseID = courseID;
+    this->_courseName = courseName;
+    this->_lecturerID = lecturerID;
+    this->_year = 2000;
+    this->_semester = 1;
+    this->_start = 0;
+    this->_end = 0;
+    this->_from = 0;
+    this->_to = 0;
+    this->_dayOfWeek = "Monday";
+}
+
 Course::~Course()
 {
     // Do nothing
@@ -36,6 +49,20 @@ string Course::getLecturerID(){
     return this->_lecturerID;
 }
 
+int Course::getYear(){
+    return this->_year;
+}
+
+int Course::getSemester(){
+    return this->_semester;
+}
+
 void Course::setLecturerID(string lecturerID){
     this->_lecturerID = lecturerID;
+}
+
+bool Course::operator==(Course *other){
+    bool result = true;
+    if (this->getCourseID() != other->getCourseID()) result = false;
+    return result;
 }

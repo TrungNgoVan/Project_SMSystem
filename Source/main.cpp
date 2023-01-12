@@ -5,36 +5,49 @@ using namespace std;
 int main()
 {
     SchoolManager HCMUS;
-    Score S1;
-    Course C1;
-    Student Trung;
-    Student Dat;
-    Lecturer Thao, Hai;
-    Hai.setLecturerID("L0000002");
+    Score S1, S2, S3, S4;
+    Student Trung("21110423"), Dat("21125231");
+    Lecturer Thao("L1112213"), Vu("L1212321");
+    Staff Hai("S1112321"), Long("S1223123");
+    Course C1("MTH10405", "DSA", Thao.getID()), C2("MTH00012", "GT2", Vu.getID()),
+        C3("MTH00108", "GT3", Vu.getID());
 
-    map<string, vector<Score>> mp1;
-    map<string, vector<Course>> mp2;
-    map<string, vector<Score>> mp3;
-    
-    mp1[Trung.getStudentID()] = {S1};
+    map<string, vector<pair<Course, vector<Score>>>> mp1;
+    map<string, vector<pair<Student, vector<Score>>>> mp2;
+
+    S1.setCourseID(C1.getCourseID());
+    S2.setCourseID(C2.getCourseID());
+    S3.setCourseID(C1.getCourseID());
+    S4.setCourseID(C2.getCourseID());
+    C1.setLecturerID(Thao.getID());
+
+    C2.setLecturerID(Vu.getID());
+
+    mp1[Trung.getID()] = {{C1, {S1}}, {C2, {S2}}};
     HCMUS.setScoreboardOfStudent(mp1);
 
-    mp2[Trung.getStudentID()] = {C1};
-    HCMUS.setListCourseOfStudent(mp2);
-    
-    S1.setCourseID(C1.getCourseID());
-    C1.setLecturerID(Thao.getLecturerID());
+    mp2[C1.getCourseID()] = {{Trung, {S1, S2}}, {Dat, {S3, S4}}};
+    HCMUS.setScoreboardOfCourse(mp2);
 
-    mp3[C1.getCourseID()] = {S1};
-    HCMUS.setScoreboardOfCourse(mp3);
+    HCMUS.setDataCourse({C1, C2});
+    HCMUS.setDataLecturer({Thao, Vu});
+    HCMUS.setDataStudent({Trung, Dat});
+    HCMUS.setDataScore({S1, S2, S3, S4});
+    HCMUS.setDataStaff({Hai, Long});
 
-//Run behavior
+    // Run behavior
     HCMUS.studentViewYourScoreboard(&Trung);
+    HCMUS.studentViewYourScoreboard(&Thao);
     HCMUS.studentViewYourListCourse(&Trung);
-    HCMUS.lecturerViewScoreboardOfCourse(&Thao, &C1);
-    HCMUS.lecturerViewScoreboardOfCourse(&Hai, &C1);
-    HCMUS.addStudent(&Thao, &Dat); // Done because Thao is Lecturer
-    HCMUS.addStudent(&Dat, &Trung); // Fail because Dat is Student
+    HCMUS.lecturerViewScoreboardOfCourse(&Trung, &C1);
+    HCMUS.staffAddStudent(&Hai, &Trung);
+    HCMUS.staffAddStudent(&Hai, &Dat);
+    HCMUS.staffRemoveStudent(&Hai, &Dat);
+    HCMUS.staffRemoveStudent(&Hai, &Dat);
+    HCMUS.staffRemoveStudent(&Hai, &Trung);
+    HCMUS.staffViewListCourses(&Hai);
+    HCMUS.staffAddCourse(&Hai,&C3);
+    HCMUS.staffViewListCourses(&Hai);
 
-    return 0;
+        return 0;
 }

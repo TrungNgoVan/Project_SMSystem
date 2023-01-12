@@ -19,6 +19,7 @@ private:
 
 public: // Constructor & Destructor
     Course();
+    Course(string, string, string);
     ~Course();
 
 public: // Getter & Setter
@@ -26,6 +27,15 @@ public: // Getter & Setter
     string getCourseID();
     string getCourseName();
     string getLecturerID();
+    int getYear();
+    int getSemester();
+    tm *getStart();
+    tm *getEnd();
+    tm *getFrom();
+    tm *getTo();
+    string getDayOfWeek();
+    void setCourseName(string);
     void setLecturerID(string);
     void setDayOfWeek(string);
+    bool operator==(Course *other);
 };

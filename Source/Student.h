@@ -9,8 +9,10 @@ private:
     string _studentID;
 public:
     Student();
+    Student(string);
     ~Student();
     int getType();
-    string getStudentID();
+    string getID();
     void setStudentID(string);
+    bool operator==(Student *other);
 };

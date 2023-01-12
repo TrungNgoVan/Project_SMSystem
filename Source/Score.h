@@ -15,6 +15,7 @@ private:
 
 public:
     Score();
+    
     ~Score();
 
     int getYear();

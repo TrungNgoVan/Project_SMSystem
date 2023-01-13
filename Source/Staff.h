@@ -13,5 +13,6 @@ public:
     ~Staff();
     int getType();
     string getID();
+    string getStaffID();
     void setStaffID(string);
 };

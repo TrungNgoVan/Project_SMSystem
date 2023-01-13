@@ -25,6 +25,11 @@ string Lecturer::getID()
     return this->_lecturerID;
 }
 
+string Lecturer::getLecturerID()
+{
+    return this->_lecturerID;
+}
+
 void Lecturer::setLecturerID(string lecturerID)
 {
     this->_lecturerID = lecturerID;

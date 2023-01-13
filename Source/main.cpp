@@ -20,12 +20,10 @@ int main()
     S3.setCourseID(C1.getCourseID());
     S4.setCourseID(C2.getCourseID());
     C1.setLecturerID(Thao.getID());
-
     C2.setLecturerID(Vu.getID());
 
     mp1[Trung.getID()] = {{C1, {S1}}, {C2, {S2}}};
     HCMUS.setScoreboardOfStudent(mp1);
-
     mp2[C1.getCourseID()] = {{Trung, {S1, S2}}, {Dat, {S3, S4}}};
     HCMUS.setScoreboardOfCourse(mp2);
 
@@ -44,10 +42,12 @@ int main()
     HCMUS.staffAddStudent(&Hai, &Dat);
     HCMUS.staffRemoveStudent(&Hai, &Dat);
     HCMUS.staffRemoveStudent(&Hai, &Dat);
-    HCMUS.staffRemoveStudent(&Hai, &Trung);
     HCMUS.staffViewListCourses(&Hai);
-    HCMUS.staffAddCourse(&Hai,&C3);
+    HCMUS.staffRemoveCourse(&Hai, &C1);
+    HCMUS.staffAddCourse(&Hai, &C3);
     HCMUS.staffViewListCourses(&Hai);
-
-        return 0;
+    HCMUS.staffViewListLecturers(&Hai);
+    HCMUS.staffViewListStudents(&Hai);
+    HCMUS.staffViewStudentListOfCourse(&Hai, &C1);
+    return 0;
 }

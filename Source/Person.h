@@ -24,6 +24,13 @@ public:
     virtual int getType() = 0;
     virtual string getID() = 0;
 
+    void setUserName(string);
+    string getUserName();
+
+    void setFullName(string);
+    string getFullName();
+
+
     void setPhoneNumber(string);
     string getPhoneNumber();
 

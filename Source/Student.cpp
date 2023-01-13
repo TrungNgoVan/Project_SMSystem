@@ -25,6 +25,11 @@ string Student::getID()
     return this->_studentID;
 }
 
+string Student::getStudentID()
+{
+    return this->_studentID;
+}
+
 void Student::setStudentID(string studentID)
 {
     this->_studentID = studentID;

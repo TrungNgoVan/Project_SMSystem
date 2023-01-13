@@ -15,5 +15,6 @@ public:
     ~Lecturer();
     int getType();  
     string getID();
+    string getLecturerID();
     void setLecturerID(string);
 };

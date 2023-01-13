@@ -13,6 +13,26 @@ Person::~Person()
     
 }
 
+
+string Person::getUserName()
+{
+    return this->_userName;
+}
+
+void Person::setUserName(string userName)
+{
+    this->_userName = userName;
+}
+
+string Person::getFullName()
+{
+    return this->_fullName;
+}
+
+void Person::setFullName(string fullName){
+    this->_fullName = fullName;
+}
+
 int getType() {
     return 0;
 }

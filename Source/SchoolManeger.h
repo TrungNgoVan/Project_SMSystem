@@ -60,12 +60,12 @@ public:
 
     // Lecturer
     void lecturerViewScoreboardOfCourse(Person *, Course *); // Done
-    void lecturerUpdateScoreOfStudent(Person *, Course *, Person *, Score *);
+    // void lecturerUpdateScoreOfStudent(Person *, Course *, Person *, Score *);
 
     // Staff
     void staffImportStudentByCSV();        // CSV file
     void staffAddStudent(Person *, Person *); // Done
-    void staffEditInformationStudent(Person *, Student *);
+    // void staffEditInformationStudent(Person *, Student *);
     void staffRemoveStudent(Person *, Person *); //Done
     void staffTransferStudent(Person *, Person *, Course *, Course *);// Done
 
@@ -77,9 +77,12 @@ public:
     void staffEditInformationCourse(Person *, Course *);
     void staffRemoveCourse(Person *, Course *);// Done
 
-    void staffViewListCourses(Person *);
-    void staffViewListStudents(Person *);
-    void staffViewStudentListOfCourse(Person *,Course *);
+    void staffViewListCourses(Person *); // Done
+    void staffViewListStudents(Person *); // Done
+    void staffViewListLecturers(Person *); // Done
+    void staffViewListStaffs(Person *); // Done
+
+    void staffViewStudentListOfCourse(Person *,Course *);//Done
 
     void exportAttendanceListOfCourse(Course *); // CSV file
 };

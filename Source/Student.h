@@ -13,6 +13,7 @@ public:
     ~Student();
     int getType();
     string getID();
+    string getStudentID();
     void setStudentID(string);
     bool operator==(Student *other);
 };

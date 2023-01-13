@@ -177,8 +177,6 @@ void SchoolManager::lecturerViewScoreboardOfCourse(Person *lecturer, Course *cou
     }
 }
 
-// void SchoolManager::lecturerUpdateScoreOfStudent(){}
-
 void SchoolManager::staffAddStudent(Person *staff, Person *newStudent)
 {
     if (staff->getType() == Type::staffCode)
@@ -223,7 +221,7 @@ void SchoolManager::staffRemoveStudent(Person *staff, Person *student)
             auto it = find(this->_dataStudent.begin(), this->_dataStudent.end(), dynamic_cast<Student *>(student));
             if (it != this->_dataStudent.end())
             {
-                // Add the student to the data
+                // Remove the student from the data
                 this->_dataStudent.erase(it);
                 cout << "Done!\n";
                 cout << "--------------------\n";
@@ -348,6 +346,12 @@ void SchoolManager::staffViewListCourses(Person *staff)
     if (staff->getType() == Type::staffCode)
     {
         cout << "Staff " << staff->getID() << " view list courses!\n";
+        if (this->_dataCourse.empty())
+        {
+            cout << "Empty!\n";
+            cout << "--------------------\n";
+            return;
+        }
         for (auto it : this->_dataCourse)
         {
             cout << it.getCourseID() << " " << it.getCourseName() << " " << it.getYear() << " "
@@ -362,3 +366,95 @@ void SchoolManager::staffViewListCourses(Person *staff)
         cout << "--------------------\n";
     }
 }
+
+void SchoolManager::staffViewListStudents(Person *staff)
+{
+    if (staff->getType() == Type::staffCode)
+    {
+        cout << "Staff " << staff->getID() << " view list students!\n";
+        if (this->_dataStudent.empty())
+        {
+            cout << "Empty!\n";
+            cout << "--------------------\n";
+            return;
+        }
+        for (auto it : this->_dataStudent)
+        {
+            cout << it.getStudentID() << " " << it.getFullName() << endl;
+        }
+        cout << "Done!\n";
+        cout << "--------------------\n";
+    }
+    else
+    {
+        cout << "You can't access!\n";
+        cout << "--------------------\n";
+    }
+}
+
+void SchoolManager::staffViewListLecturers(Person *staff){
+    if (staff->getType() == Type::staffCode){
+        cout << "Staff " << staff->getID() << " view list lecturers!\n";
+        if (this->_dataLecturer.empty()){
+            cout << "Empty!\n";
+            cout << "--------------------\n";
+            return;
+        }
+        for (auto it : this->_dataLecturer){
+            cout << it.getLecturerID() << " " << it.getFullName() << endl;
+        }
+        cout << "Done!\n";
+        cout << "--------------------\n";
+    }
+    else {
+        cout << "You can't access!\n";
+        cout << "--------------------\n";
+    }
+}
+
+void SchoolManager::staffViewListStaffs(Person *staff)
+{
+    if (staff->getType() == Type::staffCode)
+    {
+        cout << "Staff " << staff->getID() << " view list staffs!\n";
+        if (this->_dataStaff.empty()){
+            cout << "Empty!\n";
+            cout << "--------------------\n";
+            return;
+        }
+        for (auto it : this->_dataStaff)
+        {
+            cout << it.getStaffID() << " " << it.getFullName() << endl;
+        }
+        cout << "Done!\n";
+        cout << "--------------------\n";
+    }
+    else
+    {
+        cout << "You can't access!\n";
+        cout << "--------------------\n";
+    }
+}
+
+void SchoolManager::staffViewStudentListOfCourse(Person *staff, Course* course){
+    if (staff->getType() == Type::staffCode){
+        cout << "Staff " << staff->getID() << " view list students of course " << course->getCourseID() << "!\n";
+        if (_scoreboardOfCourse[course->getCourseID()].empty()){
+            cout << "Empty!\n";
+            cout << "--------------------\n";
+            return;
+        }
+        for (auto it : _scoreboardOfCourse[course->getCourseID()])
+        {
+            cout << it.first.getStudentID() << " " << it.first.getFullName() << "\n";
+        }
+    }
+    else{
+        cout << "You can't access!\n";
+        cout << "--------------------\n";
+    }
+}
+
+
+
+

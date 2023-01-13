@@ -25,6 +25,11 @@ string Staff::getID()
     return this->_staffID;
 }
 
+string Staff::getStaffID()
+{
+    return this->_staffID;
+}
+
 void Staff::setStaffID(string staffID)
 {
     this->_staffID = staffID;

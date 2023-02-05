@@ -18,12 +18,17 @@ private:
     // Staff
     map<string, vector<pair<Student, vector<Score>>>> _scoreboardOfCourse;
     map<string, vector<pair<Course, vector<Score>>>> _scoreboardOfStudent;
-    
-    vector<Course> _dataCourse;
-    vector<Score> _dataScore;
-    vector<Student> _dataStudent;
-    vector<Lecturer> _dataLecturer;
-    vector<Staff> _dataStaff;
+
+    // vector<Course> _dataCourse;
+    // vector<Score> _dataScore;
+    // vector<Student> _dataStudent;
+    // vector<Lecturer> _dataLecturer;
+    // vector<Staff> _dataStaff;
+
+    map<string, Student> _dataStudentMap;
+    map<string, Course> _dataCourseMap;
+    map<string, Lecturer> _dataLecturerMap;
+    map<string, Staff> _dataStaffMap;
 
 public:
     SchoolManager();
@@ -35,20 +40,20 @@ public:
     map<string, vector<pair<Student, vector<Score>>>> getScoreboardOfCourse();
     void setScoreboardOfCourse(map<string, vector<pair<Student, vector<Score>>>>);
 
-    vector<Course> getDataCourse();
-    void setDataCourse(vector<Course>);
+    map<string, Course> getDataCourse();
+    void setDataCourse(map<string, Course>);
 
-    vector<Score> getDataScore();
-    void setDataScore(vector<Score>);
+    // vector<Score> getDataScore();
+    // void setDataScore(vector<Score>);
 
-    vector<Student> getDataStudent();
-    void setDataStudent(vector<Student>);
+    map<string, Student> getDataStudent();
+    void setDataStudent(map<string, Student>);
 
-    vector<Lecturer> getDataLecturer();
-    void setDataLecturer(vector<Lecturer>);
+    map<string, Lecturer> getDataLecturer();
+    void setDataLecturer(map<string, Lecturer>);
 
-    vector<Staff> getDataStaff();
-    void setDataStaff(vector<Staff>);
+    map<string, Staff> getDataStaff();
+    void setDataStaff(map<string, Staff>);
 
     // Method & Behavior
 
@@ -63,26 +68,26 @@ public:
     // void lecturerUpdateScoreOfStudent(Person *, Course *, Person *, Score *);
 
     // Staff
-    void staffImportStudentByCSV();        // CSV file
+    void staffImportStudentByCSV();           // CSV file
     void staffAddStudent(Person *, Person *); // Done
     // void staffEditInformationStudent(Person *, Student *);
-    void staffRemoveStudent(Person *, Person *); //Done
-    void staffTransferStudent(Person *, Person *, Course *, Course *);// Done
+    void staffRemoveStudent(Person *, Person *);                       // Done
+    void staffTransferStudent(Person *, Person *, Course *, Course *); // Done
 
     void staffImportScoreByCSV(Person *);
     void staffImportCourseByCSV();
 
-    void staffCreateCourse(); 
-    void staffAddCourse(Person *, Course *);// Done
+    void staffCreateCourse();
+    void staffAddCourse(Person *, Course *); // Done
     void staffEditInformationCourse(Person *, Course *);
-    void staffRemoveCourse(Person *, Course *);// Done
+    void staffRemoveCourse(Person *, Course *); // Done
 
-    void staffViewListCourses(Person *); // Done
-    void staffViewListStudents(Person *); // Done
+    void staffViewListCourses(Person *);   // Done
+    void staffViewListStudents(Person *);  // Done
     void staffViewListLecturers(Person *); // Done
-    void staffViewListStaffs(Person *); // Done
+    void staffViewListStaffs(Person *);    // Done
 
-    void staffViewStudentListOfCourse(Person *,Course *);//Done
+    void staffViewStudentListOfCourse(Person *, Course *); // Done
 
     void exportAttendanceListOfCourse(Course *); // CSV file
 };

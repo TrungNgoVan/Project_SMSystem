@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <map>
 #include "SchoolManeger.h"
 
 using namespace std;
@@ -8,10 +9,13 @@ SchoolManager::SchoolManager()
 {
     this->_scoreboardOfStudent = map<string, vector<pair<Course, vector<Score>>>>();
     this->_scoreboardOfCourse = map<string, vector<pair<Student, vector<Score>>>>();
-    this->_dataCourse = vector<Course>();
-    this->_dataScore = vector<Score>();
-    this->_dataStudent = vector<Student>();
-    this->_dataLecturer = vector<Lecturer>();
+    // this->_dataCourse = vector<Course>();
+    this->_dataCourseMap = map<string, Course>();
+    // this->_dataScore = vector<Score>();
+    // this->_dataStudent = vector<Student>();
+    this->_dataStudentMap = map<string, Student>();
+    // this->_dataLecturer = vector<Lecturer>();
+    this->_dataLecturerMap = map<string, Lecturer>();
 }
 
 SchoolManager::~SchoolManager()
@@ -41,54 +45,44 @@ void SchoolManager::setScoreboardOfCourse(map<string, vector<pair<Student, vecto
     this->_scoreboardOfCourse = newMap;
 }
 
-vector<Course> SchoolManager::getDataCourse()
+map<string, Course> SchoolManager::getDataCourse()
 {
-    return this->_dataCourse;
+    return this->_dataCourseMap;
 }
 
-void SchoolManager::setDataCourse(vector<Course> newData)
+void SchoolManager::setDataCourse(map<string, Course> newData)
 {
-    this->_dataCourse = newData;
+    this->_dataCourseMap = newData;
 }
 
-vector<Score> SchoolManager::getDataScore()
+map<string, Student> SchoolManager::getDataStudent()
 {
-    return this->_dataScore;
+    return this->_dataStudentMap;
 }
 
-void SchoolManager::setDataScore(vector<Score> newData)
+void SchoolManager::setDataStudent(map<string, Student> newData)
 {
-    this->_dataScore = newData;
+    this->_dataStudentMap = newData;
 }
 
-vector<Student> SchoolManager::getDataStudent()
+map<string, Lecturer> SchoolManager::getDataLecturer()
 {
-    return this->_dataStudent;
+    return this->_dataLecturerMap;
 }
 
-void SchoolManager::setDataStudent(vector<Student> newData)
+void SchoolManager::setDataLecturer(map<string, Lecturer> newData)
 {
-    this->_dataStudent = newData;
+    this->_dataLecturerMap = newData;
 }
 
-vector<Lecturer> SchoolManager::getDataLecturer()
+map<string, Staff> SchoolManager::getDataStaff()
 {
-    return this->_dataLecturer;
+    return this->_dataStaffMap;
 }
 
-void SchoolManager::setDataLecturer(vector<Lecturer> newData)
+void SchoolManager::setDataStaff(map<string, Staff> newData)
 {
-    this->_dataLecturer = newData;
-}
-
-vector<Staff> SchoolManager::getDataStaff()
-{
-    return this->_dataStaff;
-}
-
-void SchoolManager::setDataStaff(vector<Staff> newData)
-{
-    this->_dataStaff = newData;
+    this->_dataStaffMap = newData;
 }
 
 //-------------------
@@ -184,11 +178,11 @@ void SchoolManager::staffAddStudent(Person *staff, Person *newStudent)
         if (newStudent->getType() == Type::studentCode)
         {
             cout << "Staff " << staff->getID() << " add student " << newStudent->getID() << " to data!\n";
-            auto it = find(this->_dataStudent.begin(), this->_dataStudent.end(), dynamic_cast<Student *>(newStudent));
-            if (it == this->_dataStudent.end())
+            auto it = find(this->_dataStudentMap.begin(), this->_dataStudentMap.end(), dynamic_cast<Student *>(newStudent)->getStudentID());
+            if (it == this->_dataStudentMap.end())
             {
                 // Add the student to the data
-                this->_dataStudent.push_back(*dynamic_cast<Student *>(newStudent));
+                this->_dataStudentMap.insert(pair<string, Student>(dynamic_cast<Student *>(newStudent)->getStudentID(), *dynamic_cast<Student *>(newStudent)));
                 cout << "Done!\n";
                 cout << "--------------------\n";
             }
@@ -218,11 +212,12 @@ void SchoolManager::staffRemoveStudent(Person *staff, Person *student)
         if (student->getType() == Type::studentCode)
         {
             cout << "Staff " << staff->getID() << " remove student " << student->getID() << " from data!\n";
-            auto it = find(this->_dataStudent.begin(), this->_dataStudent.end(), dynamic_cast<Student *>(student));
-            if (it != this->_dataStudent.end())
+            auto it = find(this->_dataStudentMap.begin(), this->_dataStudentMap.end(), dynamic_cast<Student *>(student)->getStudentID());
+            if (it != this->_dataStudentMap.end())
             {
                 // Remove the student from the data
-                this->_dataStudent.erase(it);
+                this->_dataStudentMap.erase(it);
+
                 cout << "Done!\n";
                 cout << "--------------------\n";
             }
@@ -251,30 +246,8 @@ void SchoolManager::staffTransferStudent(Person *staff, Person *student, Course 
     {
         if (student->getType() == Type::studentCode)
         {
-            cout << "Staff " << staff->getID() << " transfer student " << student->getID() << " from course " << courseA->getCourseID() << " to course " << courseB->getCourseID() << " !\n";
-            auto it = find(this->_dataStudent.begin(), this->_dataStudent.end(), dynamic_cast<Student *>(student));
-            if (it != this->_dataStudent.end())
-            {
-                // Add the student to the data
-                vector<pair<Course, vector<Score>>> data = this->_scoreboardOfStudent[student->getID()];
-                for (auto it : data)
-                {
-                    if (it.first.getCourseID() == courseA->getCourseID())
-                    {
-                        it.first = *courseB;
-                        cout << "Done!\n";
-                        cout << "--------------------\n";
-                        return;
-                    }
-                }
-                cout << "This student does not exist in this course!\n";
-                cout << "--------------------\n";
-            }
-            else
-            {
-                cout << "This student does not exist!\n";
-                cout << "--------------------\n";
-            }
+            cout << "Staff " << staff->getID() << " transfer student " << student->getID() << " from course " 
+            << courseA->getCourseID() << " to course " << courseB->getCourseID() << " !\n";
         }
         else
         {
@@ -294,11 +267,11 @@ void SchoolManager::staffAddCourse(Person *staff, Course *newCourse)
     if (staff->getType() == Type::staffCode)
     {
         cout << "Staff " << staff->getID() << " add course " << newCourse->getCourseID() << " to data!\n";
-        auto it = find(this->_dataCourse.begin(), this->_dataCourse.end(), newCourse);
-        if (it == this->_dataCourse.end())
+        auto it = find(this->_dataCourseMap.begin(), this->_dataCourseMap.end(), newCourse->getCourseID());
+        if (it == this->_dataCourseMap.end())
         {
             // Add the course to the data
-            this->_dataCourse.push_back(*newCourse);
+            this->_dataCourseMap[newCourse->getCourseID()] = *newCourse;
             cout << "Done!\n";
             cout << "--------------------\n";
         }
@@ -320,11 +293,11 @@ void SchoolManager::staffRemoveCourse(Person *staff, Course *course)
     if (staff->getType() == Type::staffCode)
     {
         cout << "Staff " << staff->getID() << " remove course " << course->getCourseID() << " from data!\n";
-        auto it = find(this->_dataCourse.begin(), this->_dataCourse.end(), course);
-        if (it != this->_dataCourse.end())
+        auto it = find(this->_dataCourseMap.begin(), this->_dataCourseMap.end(), course->getCourseID());
+        if (it != this->_dataCourseMap.end())
         {
-            // Add the course to the data
-            this->_dataCourse.erase(it);
+            // Remove the course from the data
+            this->_dataCourseMap.erase(it);
             cout << "Done!\n";
             cout << "--------------------\n";
         }
@@ -346,16 +319,18 @@ void SchoolManager::staffViewListCourses(Person *staff)
     if (staff->getType() == Type::staffCode)
     {
         cout << "Staff " << staff->getID() << " view list courses!\n";
-        if (this->_dataCourse.empty())
+        if (this->_dataCourseMap.empty())
         {
             cout << "Empty!\n";
             cout << "--------------------\n";
             return;
         }
-        for (auto it : this->_dataCourse)
+        else
         {
-            cout << it.getCourseID() << " " << it.getCourseName() << " " << it.getYear() << " "
-                 << it.getSemester() << " " << endl;
+            for (auto it : this->_dataCourseMap)
+            {
+                cout << it.second.getCourseID() << " " << it.second.getCourseName() << endl;
+            }
         }
         cout << "Done!\n";
         cout << "--------------------\n";
@@ -372,15 +347,15 @@ void SchoolManager::staffViewListStudents(Person *staff)
     if (staff->getType() == Type::staffCode)
     {
         cout << "Staff " << staff->getID() << " view list students!\n";
-        if (this->_dataStudent.empty())
+        if (this->_dataStudentMap.empty())
         {
             cout << "Empty!\n";
             cout << "--------------------\n";
             return;
         }
-        for (auto it : this->_dataStudent)
+        for (auto it : this->_dataStudentMap)
         {
-            cout << it.getStudentID() << " " << it.getFullName() << endl;
+            cout << it.second.getStudentID() << " " << it.second.getFullName() << endl;
         }
         cout << "Done!\n";
         cout << "--------------------\n";
@@ -392,21 +367,23 @@ void SchoolManager::staffViewListStudents(Person *staff)
     }
 }
 
-void SchoolManager::staffViewListLecturers(Person *staff){
-    if (staff->getType() == Type::staffCode){
-        cout << "Staff " << staff->getID() << " view list lecturers!\n";
-        if (this->_dataLecturer.empty()){
+void SchoolManager::staffViewListLecturers(Person *staff)
+{
+    if (staff->getType() == Type::staffCode)
+    {
+        if (this->_dataLecturerMap.empty())
+        {
             cout << "Empty!\n";
             cout << "--------------------\n";
             return;
         }
-        for (auto it : this->_dataLecturer){
-            cout << it.getLecturerID() << " " << it.getFullName() << endl;
+        for (auto it : this->_dataLecturerMap)
+        {
+            cout << it.second.getLecturerID() << " " << it.second.getFullName() << endl;
         }
-        cout << "Done!\n";
-        cout << "--------------------\n";
     }
-    else {
+    else
+    {
         cout << "You can't access!\n";
         cout << "--------------------\n";
     }
@@ -417,17 +394,16 @@ void SchoolManager::staffViewListStaffs(Person *staff)
     if (staff->getType() == Type::staffCode)
     {
         cout << "Staff " << staff->getID() << " view list staffs!\n";
-        if (this->_dataStaff.empty()){
+        if (this->_dataStaffMap.empty())
+        {
             cout << "Empty!\n";
             cout << "--------------------\n";
             return;
         }
-        for (auto it : this->_dataStaff)
+        for (auto it : this->_dataStaffMap)
         {
-            cout << it.getStaffID() << " " << it.getFullName() << endl;
+            cout << it.second.getStaffID() << " " << it.second.getFullName() << "\n";
         }
-        cout << "Done!\n";
-        cout << "--------------------\n";
     }
     else
     {
@@ -436,10 +412,13 @@ void SchoolManager::staffViewListStaffs(Person *staff)
     }
 }
 
-void SchoolManager::staffViewStudentListOfCourse(Person *staff, Course* course){
-    if (staff->getType() == Type::staffCode){
+void SchoolManager::staffViewStudentListOfCourse(Person *staff, Course *course)
+{
+    if (staff->getType() == Type::staffCode)
+    {
         cout << "Staff " << staff->getID() << " view list students of course " << course->getCourseID() << "!\n";
-        if (_scoreboardOfCourse[course->getCourseID()].empty()){
+        if (_scoreboardOfCourse[course->getCourseID()].empty())
+        {
             cout << "Empty!\n";
             cout << "--------------------\n";
             return;
@@ -449,7 +428,8 @@ void SchoolManager::staffViewStudentListOfCourse(Person *staff, Course* course){
             cout << it.first.getStudentID() << " " << it.first.getFullName() << "\n";
         }
     }
-    else{
+    else
+    {
         cout << "You can't access!\n";
         cout << "--------------------\n";
     }

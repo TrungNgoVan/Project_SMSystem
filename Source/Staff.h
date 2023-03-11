@@ -15,4 +15,5 @@ public:
     string getID();
     string getStaffID();
     void setStaffID(string);
+    bool operator==(Staff *other);
 };

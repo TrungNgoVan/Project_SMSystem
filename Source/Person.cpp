@@ -8,6 +8,15 @@ Person::Person()
 
 }
 
+Person::Person(string userName, string password, string fullName, string email, string phoneNumber)
+{
+    this->_userName = userName;
+    this->_password = password;
+    this->_fullName = fullName;
+    this->_email = email;
+    this->_phoneNumber = phoneNumber;
+}
+
 Person::~Person()
 {
     
@@ -29,11 +38,13 @@ string Person::getFullName()
     return this->_fullName;
 }
 
-void Person::setFullName(string fullName){
+void Person::setFullName(string fullName)
+{
     this->_fullName = fullName;
 }
 
-int getType() {
+int getType() 
+{
     return 0;
 }
 
@@ -65,4 +76,12 @@ string Person::getPassword()
 void Person::setPassword(string password)
 {
     this->_password = password;
+}
+
+bool Person::operator==(Person *other)
+{
+    bool result = true;
+    if (this->_userName != other->_userName)
+        result = false;
+    return result;
 }

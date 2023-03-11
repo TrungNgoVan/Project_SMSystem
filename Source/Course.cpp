@@ -45,23 +45,28 @@ string Course::getCourseName()
 {
     return this->_courseName;
 }
-string Course::getLecturerID(){
+string Course::getLecturerID()
+{
     return this->_lecturerID;
 }
 
-int Course::getYear(){
+int Course::getYear()
+{
     return this->_year;
 }
 
-int Course::getSemester(){
+int Course::getSemester()
+{
     return this->_semester;
 }
 
-void Course::setLecturerID(string lecturerID){
+void Course::setLecturerID(string lecturerID)
+{
     this->_lecturerID = lecturerID;
 }
 
-bool Course::operator==(Course *other){
+bool Course::operator==(Course *other)
+{
     bool result = true;
     if (this->getCourseID() != other->getCourseID()) result = false;
     return result;

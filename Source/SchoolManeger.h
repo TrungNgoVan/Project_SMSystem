@@ -9,22 +9,16 @@
 #include "Student.h"
 #include "Lecturer.h"
 #include "Staff.h"
+#include "Helper.h"
 
 using namespace std;
 class SchoolManager
 {
 private:
-    // Student
-    // Staff
+    // vector<Score>* _scoreList;
     map<string, vector<pair<Student, vector<Score>>>> _scoreboardOfCourse;
     map<string, vector<pair<Course, vector<Score>>>> _scoreboardOfStudent;
-
-    // vector<Course> _dataCourse;
-    // vector<Score> _dataScore;
-    // vector<Student> _dataStudent;
-    // vector<Lecturer> _dataLecturer;
-    // vector<Staff> _dataStaff;
-
+    
     map<string, Student> _dataStudentMap;
     map<string, Course> _dataCourseMap;
     map<string, Lecturer> _dataLecturerMap;
@@ -42,9 +36,6 @@ public:
 
     map<string, Course> getDataCourse();
     void setDataCourse(map<string, Course>);
-
-    // vector<Score> getDataScore();
-    // void setDataScore(vector<Score>);
 
     map<string, Student> getDataStudent();
     void setDataStudent(map<string, Student>);
@@ -68,13 +59,13 @@ public:
     // void lecturerUpdateScoreOfStudent(Person *, Course *, Person *, Score *);
 
     // Staff
-    void staffImportStudentByCSV();           // CSV file
+    void staffImportStudentByCSV(Person*, const string&); //Done
     void staffAddStudent(Person *, Person *); // Done
     // void staffEditInformationStudent(Person *, Student *);
     void staffRemoveStudent(Person *, Person *);                       // Done
     void staffTransferStudent(Person *, Person *, Course *, Course *); // Done
 
-    void staffImportScoreByCSV(Person *);
+    void staffImportScoreByCSV(Person *, const string&);
     void staffImportCourseByCSV();
 
     void staffCreateCourse();
@@ -88,6 +79,5 @@ public:
     void staffViewListStaffs(Person *);    // Done
 
     void staffViewStudentListOfCourse(Person *, Course *); // Done
-
-    void exportAttendanceListOfCourse(Course *); // CSV file
+    void exportAttendanceListOfCourse(Course *);           // CSV file
 };

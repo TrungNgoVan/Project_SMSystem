@@ -13,8 +13,9 @@ public:
     Lecturer();
     Lecturer(string);
     ~Lecturer();
-    int getType();  
+    int getType();
     string getID();
     string getLecturerID();
     void setLecturerID(string);
+    bool operator==(Lecturer *other);
 };

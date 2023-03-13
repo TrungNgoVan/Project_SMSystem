@@ -1,17 +1,19 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <unordered_map>
 #include "SchoolManeger.h"
 
 using namespace std;
 
 SchoolManager::SchoolManager()
 {
-    this->_scoreboardOfStudent = map<string, vector<pair<Course, vector<Score>>>>();
-    this->_scoreboardOfCourse = map<string, vector<pair<Student, vector<Score>>>>();
+
     this->_dataCourseMap = map<string, Course>();
     this->_dataStudentMap = map<string, Student>();
     this->_dataLecturerMap = map<string, Lecturer>();
+    this->_dataStaffMap = map<string, Staff>();
+    this->_dataScore = ScoreManager();
 }
 
 SchoolManager::~SchoolManager()
@@ -22,24 +24,6 @@ SchoolManager::~SchoolManager()
 //-------------------
 //- GETTER & SETTER -
 //-------------------
-
-map<string, vector<pair<Course, vector<Score>>>> SchoolManager::getScoreboardOfStudent()
-{
-    return this->_scoreboardOfStudent;
-}
-void SchoolManager::setScoreboardOfStudent(map<string, vector<pair<Course, vector<Score>>>> newMap)
-{
-    this->_scoreboardOfStudent = newMap;
-}
-
-map<string, vector<pair<Student, vector<Score>>>> SchoolManager::getScoreboardOfCourse()
-{
-    return this->_scoreboardOfCourse;
-}
-void SchoolManager::setScoreboardOfCourse(map<string, vector<pair<Student, vector<Score>>>> newMap)
-{
-    this->_scoreboardOfCourse = newMap;
-}
 
 map<string, Course> SchoolManager::getDataCourse()
 {
@@ -81,6 +65,17 @@ void SchoolManager::setDataStaff(map<string, Staff> newData)
     this->_dataStaffMap = newData;
 }
 
+ScoreManager SchoolManager::getDataScore()
+{
+    return this->_dataScore;
+}
+
+void SchoolManager::setDataScore(ScoreManager newData)
+{
+    this->_dataScore = newData;
+}
+
+
 //-------------------
 //----- FEATURE -----
 //-------------------
@@ -90,16 +85,14 @@ void SchoolManager::studentViewYourScoreboard(Person *student)
     cout << "Function: studentViewYourScoreboard\n";
     if (student->getType() == Type::studentCode)
     {
-        cout << "Student " << student->getID() << " view their scoreboard!\n";
-        vector<pair<Course, vector<Score>>> data = this->_scoreboardOfStudent[student->getID()];
-        for (auto it : data)
+        if (this->_dataStudentMap.find(student->getID()) == this->_dataStudentMap.end())
         {
-            cout << it.first.getCourseID() << "\n";
-            for (auto score : it.second)
-            {
-                score.displayScore();
-            }
+            cout << "Student not found!\n";
+            cout << "--------------------\n";
+            return;
         }
+        cout << "Student " << student->getID() << " view their scoreboard!\n";
+        this->_dataScore.getScoreByStudentID(student->getID());
         cout << "--------------------\n";
     }
     else
@@ -109,18 +102,23 @@ void SchoolManager::studentViewYourScoreboard(Person *student)
     }
 }
 
+
+
+
 void SchoolManager::studentViewYourListCourse(Person *student)
 {
     cout << "Function: studentViewYourListCourse\n";
     if (student->getType() == Type::studentCode)
     {
-        cout << "Student " << student->getID() << " view their list course!\n";
-        vector<pair<Course, vector<Score>>> data = this->_scoreboardOfStudent[student->getID()];
-        for (auto it : data)
+        if (this->_dataStudentMap.find(student->getID()) == this->_dataStudentMap.end())
         {
-            cout << it.first.getCourseID() << "\n";
+            cout << "Student not found!\n";
+            cout << "--------------------\n";
+            return;
         }
-        cout << "--------------------\n";
+        else
+        {
+                }
     }
     else
     {
@@ -146,20 +144,13 @@ void SchoolManager::lecturerViewScoreboardOfCourse(Person *lecturer, Course *cou
         }
         else
         {
-            cout << course->getCourseID() << "\n";
-            vector<pair<Student, vector<Score>>> data = this->_scoreboardOfCourse[course->getCourseID()];
-            for (auto it : data)
+            if (this->_dataCourseMap.find(course->getCourseID()) == this->_dataCourseMap.end())
             {
-                cout << it.first.getID() << "\n";
-                for (auto score : it.second)
-                {
-                    if (score.getCourseID() == course->getCourseID())
-                    {
-                        score.displayScore();
-                        break;
-                    }
-                }
+                cout << "Course not found!\n";
+                cout << "--------------------\n";
+                return;
             }
+            this->_dataScore.getScoreByCourseID(course->getCourseID());           
             cout << "--------------------\n";
         }
     }
@@ -239,25 +230,30 @@ void SchoolManager::staffRemoveStudent(Person *staff, Person *student)
     }
 }
 
-void SchoolManager::staffImportStudentByCSV(Person* staff, const string& fileName){
+void SchoolManager::staffImportStudentByCSV(Person *staff, const string &fileName)
+{
     cout << "Function: staffImportStudentByCSV\n";
     if (staff->getType() == Type::staffCode)
     {
-        vector<Student*> csv = Helper::readStudentFileCVS("../Data/StudentData.csv");
-        for (auto student : csv){
+        cout << "Staff " << staff->getID() << " import student by CSV file!\n";
+        vector<Student *> csv = Helper::readStudentFileCSV("../Data/StudentData.csv");
+        for (auto student : csv)
+        {
+            // Add student to data
             auto it = this->_dataStudentMap.find(student->getID());
             if (it == this->_dataStudentMap.end())
             {
-                // Add the student to the data
                 this->_dataStudentMap.insert(pair<string, Student>(student->getID(), *student));
             }
             else
             {
-                cout << "This student" << student->getStudentID() <<  " exists!\n";
+                cout << "This student exists!\n";
             }
         }
-        // clear memory of csv
-        for (auto student : csv){
+
+        // delete csv
+        for (auto student : csv)
+        {
             delete student;
         }
     }
@@ -266,64 +262,25 @@ void SchoolManager::staffImportStudentByCSV(Person* staff, const string& fileNam
         cout << "You can't access!\n";
         cout << "--------------------\n";
     }
+    cout << "Done import student!\n";
+    cout << "--------------------\n";
 }
 
-void SchoolManager::staffImportScoreByCSV(Person* staff, const string& fileName){
+void SchoolManager::staffImportScoreByCSV(Person *staff, const string &fileName)
+{
     cout << "Function: staffImportScoreByCSV\n";
     if (staff->getType() == Type::staffCode)
     {
-        vector<Score*> csv = Helper::readScoreFileCVS("../Data/ScoreData.csv");
-        for (auto score : csv){
-            // Add score to course
-            auto it = this->_scoreboardOfCourse.find(score->getCourseID());
-            if (it != this->_scoreboardOfCourse.end())
-            {
-                // Add the student to the data
-                vector<pair<Student, vector<Score>>> data = this->_scoreboardOfCourse[score->getCourseID()];
-                for (auto it2 : data)
-                {
-                    if (it2.first.getID() == score->getStudentID())
-                    {
-                        it2.second.push_back(*score);
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                cout << "This course" << score->getCourseID() <<  " does not exist!\n";
-            }
-
-            // Add score to student
-            auto it2 = this->_scoreboardOfStudent.find(score->getStudentID());
-            if (it2 != this->_scoreboardOfStudent.end())
-            {
-                // Add the student to the data
-                vector<pair<Course, vector<Score>>> data = this->_scoreboardOfStudent[score->getStudentID()];
-                for (auto it3 : data)
-                {
-                    if (it3.first.getCourseID() == score->getCourseID())
-                    {
-                        it3.second.push_back(*score);
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                cout << "This student" << score->getStudentID() <<  " does not exist!\n";
-            }
-        }
-        // clear memory of csv
-        for (auto score : csv){
-            delete score;
-        }
+        cout << "Staff " << staff->getID() << " import score by CSV file!\n";
+        this->_dataScore.importScoreBoard(fileName);
     }
     else
     {
         cout << "You can't access!\n";
         cout << "--------------------\n";
     }
+    cout << "Done import score!\n";
+    cout << "--------------------\n";
 }
 
 // void SchoolManager::staffTransferStudent(Person *staff, Person *student, Course *courseA, Course *courseB)
@@ -400,33 +357,33 @@ void SchoolManager::staffImportScoreByCSV(Person* staff, const string& fileName)
 //     }
 // }
 
-// void SchoolManager::staffViewListCourses(Person *staff)
-// {
-//     if (staff->getType() == Type::staffCode)
-//     {
-//         cout << "Staff " << staff->getID() << " view list courses!\n";
-//         if (this->_dataCourseMap.empty())
-//         {
-//             cout << "Empty!\n";
-//             cout << "--------------------\n";
-//             return;
-//         }
-//         else
-//         {
-//             for (auto it : this->_dataCourseMap)
-//             {
-//                 cout << it.second.getCourseID() << " " << it.second.getCourseName() << endl;
-//             }
-//         }
-//         cout << "Done!\n";
-//         cout << "--------------------\n";
-//     }
-//     else
-//     {
-//         cout << "You can't access!\n";
-//         cout << "--------------------\n";
-//     }
-// }
+void SchoolManager::staffViewListCourses(Person *staff)
+{
+    if (staff->getType() == Type::staffCode)
+    {
+        cout << "Staff " << staff->getID() << " view list courses!\n";
+        if (this->_dataCourseMap.empty())
+        {
+            cout << "Empty!\n";
+            cout << "--------------------\n";
+            return;
+        }
+        else
+        {
+            for (auto it : this->_dataCourseMap)
+            {
+                cout << it.second.getCourseID() << " " << it.second.getCourseName() << endl;
+            }
+        }
+        cout << "Done!\n";
+        cout << "--------------------\n";
+    }
+    else
+    {
+        cout << "You can't access!\n";
+        cout << "--------------------\n";
+    }
+}
 
 void SchoolManager::staffViewListStudents(Person *staff)
 {

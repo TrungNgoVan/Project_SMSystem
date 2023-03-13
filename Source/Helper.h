@@ -18,8 +18,9 @@ public:
     static void start();
     static bool isInteger(const string& s);
     static bool isFloat(const string& s);
-    static vector<Student*> readStudentFileCVS(const string& fileName);
-    static vector<Score*> readScoreFileCVS(const string& fileName);
-    static vector<Lecturer*> readLecturerFileCVS(const string& fileName);
-    static vector<Staff*> readStaffFileCVS(const string& fileName);
+    static vector<Student*> readStudentFileCSV(const string& fileName);
+    static vector<Score*> readScoreFileCSV(const string& fileName);
+    static vector<Lecturer*> readLecturerFileCSV(const string& fileName);
+    static vector<Staff*> readStaffFileCSV(const string& fileName);
+    static void writeScoreFileCSV(const string& fileName, vector<Score*> scoreList);
 };

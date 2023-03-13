@@ -2,37 +2,31 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <unordered_map>
 #include <algorithm>
 
 #include "Course.h"
 #include "Score.h"
+#include "ScoreManager.h"
 #include "Student.h"
 #include "Lecturer.h"
 #include "Staff.h"
 #include "Helper.h"
 
+
 using namespace std;
 class SchoolManager
 {
 private:
-    // vector<Score>* _scoreList;
-    map<string, vector<pair<Student, vector<Score>>>> _scoreboardOfCourse;
-    map<string, vector<pair<Course, vector<Score>>>> _scoreboardOfStudent;
-    
     map<string, Student> _dataStudentMap;
     map<string, Course> _dataCourseMap;
     map<string, Lecturer> _dataLecturerMap;
     map<string, Staff> _dataStaffMap;
-
+    ScoreManager _dataScore;
 public:
     SchoolManager();
     ~SchoolManager();
     // Getter & setter
-    map<string, vector<pair<Course, vector<Score>>>> getScoreboardOfStudent();
-    void setScoreboardOfStudent(map<string, vector<pair<Course, vector<Score>>>>);
-
-    map<string, vector<pair<Student, vector<Score>>>> getScoreboardOfCourse();
-    void setScoreboardOfCourse(map<string, vector<pair<Student, vector<Score>>>>);
 
     map<string, Course> getDataCourse();
     void setDataCourse(map<string, Course>);
@@ -45,6 +39,9 @@ public:
 
     map<string, Staff> getDataStaff();
     void setDataStaff(map<string, Staff>);
+
+    ScoreManager getDataScore();
+    void setDataScore(ScoreManager);
 
     // Method & Behavior
 
@@ -59,13 +56,13 @@ public:
     // void lecturerUpdateScoreOfStudent(Person *, Course *, Person *, Score *);
 
     // Staff
-    void staffImportStudentByCSV(Person*, const string&); //Done
-    void staffAddStudent(Person *, Person *); // Done
+    void staffImportStudentByCSV(Person *, const string &); // Done
+    void staffAddStudent(Person *, Person *);               // Done
     // void staffEditInformationStudent(Person *, Student *);
     void staffRemoveStudent(Person *, Person *);                       // Done
     void staffTransferStudent(Person *, Person *, Course *, Course *); // Done
 
-    void staffImportScoreByCSV(Person *, const string&);
+    void staffImportScoreByCSV(Person *, const string &);
     void staffImportCourseByCSV();
 
     void staffCreateCourse();

@@ -8,6 +8,7 @@ class Student : public Person
 {
 private:
     string _studentID;
+    
 public:
     Student();
     Student(string);

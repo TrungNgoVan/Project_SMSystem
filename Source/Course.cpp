@@ -65,6 +65,16 @@ void Course::setLecturerID(string lecturerID)
     this->_lecturerID = lecturerID;
 }
 
+void Course::displayCourse()
+{
+    cout << "Course ID: " << this->getCourseID() << endl;
+    cout << "Course name: " << this->getCourseName() << endl;
+    cout << "Lecturer ID: " << this->getLecturerID() << endl;
+    cout << "Year: " << this->getYear() << endl;
+    cout << "Semester: " << this->getSemester() << endl;
+    cout << "\n";
+}
+
 bool Course::operator==(Course *other)
 {
     bool result = true;

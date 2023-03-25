@@ -6,24 +6,44 @@
 
 using namespace std;
 
+SchoolManager* SchoolManager::_instance = NULL; 
+
 SchoolManager::SchoolManager()
 {
-
-    this->_dataCourseMap = map<string, Course>();
     this->_dataStudentMap = map<string, Student>();
+    this->_dataCourseMap = map<string, Course>();
     this->_dataLecturerMap = map<string, Lecturer>();
     this->_dataStaffMap = map<string, Staff>();
-    this->_dataScore = ScoreManager();
+    this->_dataScore = new ScoreManager();
+}
+
+SchoolManager* SchoolManager::getInstance()
+{
+    if (_instance == NULL)
+    {
+        _instance = new SchoolManager();
+    }
+    return _instance;
 }
 
 SchoolManager::~SchoolManager()
 {
-    // Do nothing;
+    delete this->_dataScore;
 }
 
-//-------------------
-//- GETTER & SETTER -
-//-------------------
+void SchoolManager::loadData(){
+    Lecturer Thao("L1112213"), Vu("L1212321");
+    Staff Hai("S1112321"), Long("S1223123");
+    Course C1("MTH10405", "DSA", Thao.getID()),
+        C2("MTH00012", "GT2", Vu.getID()),
+        C3("MTH00108", "GT3", Vu.getID());
+
+    this->setDataCourse({{C1.getCourseID(), C1}, {C2.getCourseID(), C2}, {C3.getCourseID(), C3}});
+    this->setDataLecturer({{Thao.getID(), Thao}, {Vu.getID(), Vu}});
+    this->setDataStaff({{Hai.getID(), Hai}, {Long.getID(), Long}});
+    this->staffImportStudentByCSV(&Hai, "../Data/StudentData.csv");
+
+}
 
 map<string, Course> SchoolManager::getDataCourse()
 {
@@ -65,16 +85,15 @@ void SchoolManager::setDataStaff(map<string, Staff> newData)
     this->_dataStaffMap = newData;
 }
 
-ScoreManager SchoolManager::getDataScore()
+ScoreManager *SchoolManager::getDataScore()
 {
     return this->_dataScore;
 }
 
-void SchoolManager::setDataScore(ScoreManager newData)
+void SchoolManager::setDataScore(ScoreManager *newData)
 {
     this->_dataScore = newData;
 }
-
 
 //-------------------
 //----- FEATURE -----
@@ -92,22 +111,62 @@ void SchoolManager::studentViewYourScoreboard(Person *student)
             return;
         }
         cout << "Student " << student->getID() << " view their scoreboard!\n";
-        this->_dataScore.getScoreByStudentID(student->getID());
-        cout << "--------------------\n";
+        vector<Score *> data = this->_dataScore->getScoreByStudentID(student->getID());
+        if (data.size() == 0)
+        {
+            cout << "Student " << student->getID() << " don't have any course!\n";
+            cout << "--------------------\n";
+            return;
+        }
+        else
+        {
+            for (auto score : data)
+            {
+                if (score->getYear() != -1)
+                    score->displayScore();
+            }
+        }
     }
     else
     {
         cout << "You can't access!\n";
-        cout << "--------------------\n";
     }
+    cout << "--------------------\n";
 }
-
-
-
 
 void SchoolManager::studentViewYourListCourse(Person *student)
 {
     cout << "Function: studentViewYourListCourse\n";
+    if (student->getType() == Type::studentCode)
+    {
+        vector<string> data = this->_dataScore->getCoursesIDByStudentID(student->getID());
+        if (data.size() == 0)
+        {
+            cout << "Student " << student->getID() << " don't have any course!\n";
+            cout << "--------------------\n";
+            return;
+        }
+        else
+        {
+            cout << "Student " << student->getID() << " view their list course!\n";
+            for (auto courseID : data)
+            {
+                cout << courseID << endl;
+            }
+        }
+        // free memory of data
+        data.clear();
+    }
+    else
+    {
+        cout << "You can't access!\n";
+    }
+    cout << "--------------------\n";
+}
+
+void SchoolManager::studentCourseRegistration(Person *student, string courseID)
+{
+    cout << "Function: studentCourseRegistration\n";
     if (student->getType() == Type::studentCode)
     {
         if (this->_dataStudentMap.find(student->getID()) == this->_dataStudentMap.end())
@@ -116,19 +175,23 @@ void SchoolManager::studentViewYourListCourse(Person *student)
             cout << "--------------------\n";
             return;
         }
-        else
+        if (this->_dataCourseMap.find(courseID) == this->_dataCourseMap.end())
         {
-                }
+            cout << "Course not found!\n";
+            cout << "--------------------\n";
+            return;
+        }
+        cout << "Student " << student->getID() << " register course " << courseID << " !\n";
+        this->_dataScore->addScore(new Score(student->getID(), courseID));
+
+        cout << "Done!\n";
+        cout << "--------------------\n";
     }
     else
     {
         cout << "You can't access!\n";
         cout << "--------------------\n";
     }
-}
-
-void SchoolManager::studentCourseRegistration(Person *student)
-{
 }
 
 void SchoolManager::lecturerViewScoreboardOfCourse(Person *lecturer, Course *course)
@@ -150,8 +213,27 @@ void SchoolManager::lecturerViewScoreboardOfCourse(Person *lecturer, Course *cou
                 cout << "--------------------\n";
                 return;
             }
-            this->_dataScore.getScoreByCourseID(course->getCourseID());           
+            this->_dataScore->getScoreByCourseID(course->getCourseID());
             cout << "--------------------\n";
+        }
+    }
+    else
+    {
+        cout << "You can't access!\n";
+        cout << "--------------------\n";
+    }
+}
+
+void SchoolManager::lecturerUpdateScoreOfStudent(Person *lecturer, Score *score){
+    
+    cout << "Function: lecturerUpdateScoreOfStudent\n";
+    if (lecturer->getType() == Type::lecturerCode)
+    {
+        if (this->_dataScore->getScore(score->getStudentID(), score->getCourseID()) == NULL){
+            this->_dataScore->addScore(score);
+        }
+        else {
+            this->_dataScore->updateScore(score);
         }
     }
     else
@@ -272,7 +354,7 @@ void SchoolManager::staffImportScoreByCSV(Person *staff, const string &fileName)
     if (staff->getType() == Type::staffCode)
     {
         cout << "Staff " << staff->getID() << " import score by CSV file!\n";
-        this->_dataScore.importScoreBoard(fileName);
+        this->_dataScore->importScoreBoard(fileName);
     }
     else
     {

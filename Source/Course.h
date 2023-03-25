@@ -37,5 +37,6 @@ public: // Getter & Setter
     void setCourseName(string);
     void setLecturerID(string);
     void setDayOfWeek(string);
+    void displayCourse();
     bool operator==(Course *other);
 };

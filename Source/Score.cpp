@@ -5,18 +5,24 @@ using namespace std;
 
 Score::Score()
 {
-    this->_year = 2000;
-    this->_semester = 1;
-    this->_studentID = "00000000";
-    this->_courseID = "MTH00000";
-    this->_midtermScore = 0;
-    this->_labScore = 0;
-    this->_finalScore = 0;
+    this->_year = -1;
+    this->_semester = -1;
+    this->_studentID = "";
+    this->_courseID = "";
+    this->_midtermScore = -1;
+    this->_labScore = -1;
+    this->_finalScore = -1;
 }
 
 Score::~Score()
 {
 }
+
+Score::Score(string studentID, string courseID) : Score(){
+    this->_studentID = studentID;
+    this->_courseID = courseID;
+}
+
 
 Score::Score(int year, int semester, string studentID, string courseID, float midtermScore, float labScore, float finalScore)
 {
@@ -101,7 +107,11 @@ void Score::setFinalScore(float finalScore)
 
 void Score::displayScore()
 {
-    cout << "Year: " << this->_year << " Semester: " << this->_semester << " Student ID: " << this->_studentID 
-    << " Course ID: " << this->_courseID << " Midterm score: " << this->_midtermScore << " Lab score: " << this->_labScore 
-    << " Final score: " << this->_finalScore << endl;
+    cout << "Year: " << this->_year << endl;
+    cout << "Semester: " << this->_semester << endl;
+    cout << "Student ID: " << this->_studentID << endl;
+    cout << "Course ID: " << this->_courseID << endl;
+    cout << "Midterm Score: " << this->_midtermScore << endl;
+    cout << "Lab Score: " << this->_labScore << endl;
+    cout << "Final Score: " << this->_finalScore << endl;
 }

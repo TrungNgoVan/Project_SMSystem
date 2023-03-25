@@ -8,7 +8,7 @@ class Student : public Person
 {
 private:
     string _studentID;
-    
+
 public:
     Student();
     Student(string);
@@ -18,6 +18,9 @@ public:
     string getID();
     string getStudentID();
     void setStudentID(string);
+    void viewProfile();
+    void viewCourse();
+    void viewScore();
     bool operator==(Student *other);
     bool operator!=(Student *other);
 };

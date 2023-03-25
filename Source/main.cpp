@@ -4,28 +4,29 @@ using namespace std;
 
 int main()
 {
-    SchoolManager HCMUS;
-    Score S1, S2, S3, S4;
-    Lecturer Thao("L1112213"), Vu("L1212321");
-    Staff Hai("S1112321"), Long("S1223123");
-    Course C1("MTH10405", "DSA", Thao.getID()),
-        C2("MTH00012", "GT2", Vu.getID()),
-        C3("MTH00108", "GT3", Vu.getID());
-
-    HCMUS.setDataCourse({{C1.getCourseID(), C1}, {C2.getCourseID(), C2}, {C3.getCourseID(), C3}});
-    HCMUS.setDataLecturer({{Thao.getID(), Thao}, {Vu.getID(), Vu}});
-    HCMUS.setDataStaff({{Hai.getID(), Hai}, {Long.getID(), Long}});
-
     // Run behavior
-    HCMUS.staffViewListCourses(&Hai);
-    HCMUS.staffViewListStudents(&Hai);
-    HCMUS.staffImportStudentByCSV(&Hai, "../Data/StudentData.csv");
-    HCMUS.staffViewListStudents(&Hai);
-    HCMUS.studentViewYourScoreboard(&HCMUS.getDataStudent()["21110401"]);
-    HCMUS.staffImportScoreByCSV(&Hai, "../Data/ScoreData.csv");
-    HCMUS.studentViewYourScoreboard(&HCMUS.getDataStudent()["21110401"]);
-    HCMUS.getDataScore().displayScoreBoard();
-
+    // HCMUS.staffViewListCourses(&Hai);
+    // HCMUS.staffViewListStudents(&Hai);
+    // HCMUS.staffImportStudentByCSV(&Hai, "../Data/StudentData.csv");
+    // HCMUS.staffViewListStudents(&Hai);
+    // HCMUS.studentViewYourScoreboard(&HCMUS.getDataStudent()["21110420"]);
+    // HCMUS.staffImportScoreByCSV(&Hai, "../Data/ScoreData.csv");
+    // HCMUS.studentViewYourScoreboard(&HCMUS.getDataStudent()["21110420"]);
+    // HCMUS.studentViewYourListCourse(&HCMUS.getDataStudent()["21110420"]);
+    // HCMUS.getDataScore().displayScoreBoard();
+    // HCMUS.studentCourseRegistration(&HCMUS.getDataStudent()["21110420"], "MTH00108");
+    // HCMUS.studentViewYourScoreboard(&HCMUS.getDataStudent()["21110413"]);
+    // HCMUS.studentViewYourListCourse(&HCMUS.getDataStudent()["21110413"]);
+    // Score scoreTest(2022,1,"21110413","MTH00012",9.0,9.5,9.5);
+    // Score scoreTest2(2022,1,"21110413","MTH00012",6.0,5.5,4.5);
+    // HCMUS.lecturerUpdateScoreOfStudent(&Thao, &scoreTest);
+    // HCMUS.studentViewYourScoreboard(&HCMUS.getDataStudent()["21110413"]);
+    // HCMUS.studentViewYourListCourse(&HCMUS.getDataStudent()["21110413"]);
+    // HCMUS.lecturerUpdateScoreOfStudent(&Thao, &scoreTest2);
+    // HCMUS.studentViewYourScoreboard(&HCMUS.getDataStudent()["21110413"]);
+    // HCMUS.studentViewYourListCourse(&HCMUS.getDataStudent()["21110413"]);
+    App::start();
+    // App::login();
     cout << "Press any key to exit...";
     return 0;
 }

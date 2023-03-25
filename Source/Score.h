@@ -16,6 +16,7 @@ private:
 
 public:
     Score();
+    Score(string, string);
     Score(int, int, string, string, float, float, float);
     ~Score();
 

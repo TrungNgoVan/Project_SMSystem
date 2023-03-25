@@ -3,13 +3,14 @@
 
 ScoreManager::ScoreManager()
 {
+    this->_scoreList = map<pair<string, string>, Score *>();
 }
 
 ScoreManager::~ScoreManager()
 {
 }
 
-void ScoreManager::importScoreBoard(const string& filePath)
+void ScoreManager::importScoreBoard(const string &filePath)
 {
     vector<Score *> csv = Helper::readScoreFileCSV(filePath);
     for (Score *score : csv)
@@ -21,24 +22,24 @@ void ScoreManager::importScoreBoard(const string& filePath)
         else
         {
             addScore(score);
+            // Add course to student
         }
-        // score->displayScore();
     }
 }
 
-void ScoreManager::exportScoreBoard(const string& filePath)
+void ScoreManager::exportScoreBoard(const string &filePath)
 {
     vector<Score *> csv;
     for (auto score : _scoreList)
     {
-        csv.push_back(&score.second);
+        csv.push_back(score.second);
     }
     Helper::writeScoreFileCSV(filePath, csv);
 }
 
-void ScoreManager::addScore(Score* score)
+void ScoreManager::addScore(Score *score)
 {
-    _scoreList[pair<string, string>(score->getStudentID(), score->getCourseID())] = *score;
+    _scoreList[pair<string, string>(score->getStudentID(), score->getCourseID())] = score;
 }
 
 bool ScoreManager::isScoreExist(string studentID, string courseID)
@@ -51,48 +52,76 @@ void ScoreManager::removeScore(string studentID, string courseID)
     _scoreList.erase(pair<string, string>(studentID, courseID));
 }
 
-void ScoreManager::updateScore(Score* score)
+void ScoreManager::updateScore(Score *score)
 {
-    _scoreList[pair<string, string>(score->getStudentID(), score->getCourseID())] = *score;
+    _scoreList[pair<string, string>(score->getStudentID(), score->getCourseID())] = score;
 }
 
-Score ScoreManager::getScore(string studentID, string courseID)
+Score *ScoreManager::getScore(string studentID, string courseID)
 {
     return _scoreList[pair<string, string>(studentID, courseID)];
 }
 
-Score ScoreManager::getScoreByStudentID(string studentID)
+vector<Score *> ScoreManager::getScoreByStudentID(string studentID)
 {
-    for (auto score : _scoreList)
+    vector<Score *> scoreList;
+
+    for (auto score : this->_scoreList)
     {
         if (score.first.first == studentID)
         {
-            return score.second;
+            scoreList.push_back(score.second);
         }
     }
-    return Score();
+    return scoreList;
 }
 
-Score ScoreManager::getScoreByCourseID(string courseID)
+Score *ScoreManager::getScoreByCourseID(string courseID)
 {
-    for (auto score : _scoreList)
+    for (auto score : this->_scoreList)
     {
         if (score.first.second == courseID)
         {
             return score.second;
         }
     }
-    return Score();
+    return new Score;
+}
+
+vector<string> ScoreManager::getCoursesIDByStudentID(string studentID)
+{
+    unordered_set<string> courseList;
+    for (auto score : this->_scoreList)
+    {
+        if (score.first.first == studentID)
+        {
+            courseList.insert(score.second->getCourseID());
+        }
+    }
+    return vector<string>(courseList.begin(), courseList.end());
+}
+
+void ScoreManager::setPresence(Student *student, Course *course, bool presence)
+{
+    if (isPresenceExist(student, course))
+    {
+        _presenceList[student->getID() + " " + course->getCourseID()]->setPresence(presence);
+    }
+    else
+    {
+        _presenceList[student->getID() + " " + course->getCourseID()] = new Presence(presence);
+    }
+}
+
+bool ScoreManager::isPresenceExist(Student *student, Course *course)
+{
+    return _presenceList.find(student->getID() + " " + course->getCourseID()) != _presenceList.end();
 }
 
 void ScoreManager::displayScoreBoard()
 {
     for (auto score : _scoreList)
     {
-        score.second.displayScore();
+        score.second->displayScore();
     }
 }
-
-
-
-

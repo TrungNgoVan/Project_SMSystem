@@ -32,8 +32,20 @@ g++ *.cpp -o main.exe
 ```bash
 main.exe
 ```
+4. Account demo
+- Student
+    - username: nguyenthuha
+    - password: 8jK29mFe
+- Lecturer
+    - username: nguyentruong
+    - password: mK8hS4fX
+- Staff
+    - username: tranthanh
+    - password: 2Jh7K8nM
 
-4.  Follow the instructions in the terminal to use the system.
+
+
+5.  Follow the instructions in the terminal to use the system.
 
 Features
 --------

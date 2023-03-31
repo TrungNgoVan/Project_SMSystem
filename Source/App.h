@@ -1,16 +1,18 @@
 #pragma once
-#include "SchoolManeger.h"
+#include "SchoolManager.h"
 
 using namespace std;
 
-class App{
+class App
+{
 private:
-    static App* _instance;
+    static App *_instance;
     bool _isLoggedIn = false;
     App();
+
 public:
     ~App();
-    static App* getInstance();
+    static App *getInstance();
     void setLoggedIn(bool isLoggedIn);
     bool getLoggedIn();
     static void start();
@@ -20,8 +22,7 @@ public:
     static void loginAsStaff();
     static void logout();
     static void mainMenu();
-    static void studentMenu(Student*);
-    static void lecturerMenu();
-    static void staffMenu();
-
+    static void studentMenu(Person *);
+    static void lecturerMenu(Person *);
+    static void staffMenu(Person *);
 };

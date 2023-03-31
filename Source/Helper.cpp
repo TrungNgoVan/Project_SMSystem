@@ -1,5 +1,7 @@
 #include "Helper.h"
 #include "Student.h"
+#include "Lecturer.h"
+#include "Staff.h"
 
 void Helper::start()
 {
@@ -84,6 +86,100 @@ vector<Student *> Helper::readStudentFileCSV(const string &fileName)
         students.push_back(s);
     }
     return students;
+}
+
+vector<Lecturer *> Helper::readLecturerFileCSV(const string &fileName)
+{
+    ifstream file(fileName);
+    if (!file.is_open())
+    {
+        cout << "File not found" << endl;
+        return vector<Lecturer *>();
+    }
+    vector<Lecturer *> lecturers;
+    string line;
+    string lecturerID, userName, password, fullName, email, phoneNumber;
+    size_t pos;
+    string delimiter = ",";
+    getline(file, line); // Skip the first line
+    while (getline(file, line))
+    {
+        lecturerID = userName = password = fullName = email = phoneNumber = "";
+        pos = 0;
+        delimiter = ",";
+
+        pos = line.find(delimiter);
+        lecturerID = line.substr(0, pos);
+        line.erase(0, pos + delimiter.length());
+
+        pos = line.find(delimiter);
+        userName = line.substr(0, pos);
+        line.erase(0, pos + delimiter.length());
+
+        pos = line.find(delimiter);
+        password = line.substr(0, pos);
+        line.erase(0, pos + delimiter.length());
+
+        pos = line.find(delimiter);
+        fullName = line.substr(0, pos);
+        line.erase(0, pos + delimiter.length());
+
+        pos = line.find(delimiter);
+        email = line.substr(0, pos);
+        line.erase(0, pos + delimiter.length());
+
+        phoneNumber = line;
+        Lecturer *l = new Lecturer(lecturerID, userName, password, fullName, email, phoneNumber);
+        lecturers.push_back(l);
+    }
+    return lecturers;
+}
+
+vector<Staff *> Helper::readStaffFileCSV(const string &fileName)
+{
+    ifstream file(fileName);
+    if (!file.is_open())
+    {
+        cout << "File not found" << endl;
+        return vector<Staff *>();
+    }
+    vector<Staff *> staffs;
+    string line;
+    string staffID, userName, password, fullName, email, phoneNumber;
+    size_t pos;
+    string delimiter = ",";
+    getline(file, line); // Skip the first line
+    while (getline(file, line))
+    {
+        staffID = userName = password = fullName = email = phoneNumber = "";
+        pos = 0;
+        delimiter = ",";
+
+        pos = line.find(delimiter);
+        staffID = line.substr(0, pos);
+        line.erase(0, pos + delimiter.length());
+
+        pos = line.find(delimiter);
+        userName = line.substr(0, pos);
+        line.erase(0, pos + delimiter.length());
+
+        pos = line.find(delimiter);
+        password = line.substr(0, pos);
+        line.erase(0, pos + delimiter.length());
+
+        pos = line.find(delimiter);
+        fullName = line.substr(0, pos);
+        line.erase(0, pos + delimiter.length());
+
+        pos = line.find(delimiter);
+        email = line.substr(0, pos);
+        line.erase(0, pos + delimiter.length());
+
+        phoneNumber = line;
+        Staff *s = new Staff(staffID, userName, password, fullName, email, phoneNumber);
+        staffs.push_back(s);
+    }
+    return staffs;
 }
 
 vector<Score *> Helper::readScoreFileCSV(const string &fileName)
@@ -173,7 +269,7 @@ vector<Score *> Helper::readScoreFileCSV(const string &fileName)
 }
 
 // Write to file
-void Helper::writeScoreFileCSV(const string& fileName, vector<Score*> scores)
+void Helper::writeScoreFileCSV(const string &fileName, vector<Score *> scores)
 {
     ofstream file(fileName);
     if (!file.is_open())
@@ -182,10 +278,8 @@ void Helper::writeScoreFileCSV(const string& fileName, vector<Score*> scores)
         return;
     }
     file << "Year,Semester,Student ID,Course ID,Midterm Score,Lab Score,Final Score" << endl;
-    for (Score* s : scores)
+    for (Score *s : scores)
     {
         file << s->getYear() << "," << s->getSemester() << "," << s->getStudentID() << "," << s->getCourseID() << "," << s->getMidtermScore() << "," << s->getLabScore() << "," << s->getFinalScore() << endl;
     }
 }
-
-

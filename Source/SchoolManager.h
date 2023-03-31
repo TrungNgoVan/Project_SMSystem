@@ -4,7 +4,6 @@
 #include <map>
 #include <unordered_map>
 #include <algorithm>
-
 #include "Course.h"
 #include "Score.h"
 #include "ScoreManager.h"
@@ -12,7 +11,6 @@
 #include "Lecturer.h"
 #include "Staff.h"
 #include "Helper.h"
-
 
 using namespace std;
 class SchoolManager
@@ -27,12 +25,12 @@ private:
     ScoreManager *_dataScore;
 
     SchoolManager();
-    
+
 public:
     // Constructor & Destructor
     ~SchoolManager();
     // Singleton
-    static SchoolManager* getInstance();
+    static SchoolManager *getInstance();
     // Getter & setter
     map<string, Course> getDataCourse();
     void setDataCourse(map<string, Course>);
@@ -42,36 +40,37 @@ public:
     void setDataLecturer(map<string, Lecturer>);
     map<string, Staff> getDataStaff();
     void setDataStaff(map<string, Staff>);
-    ScoreManager* getDataScore();
-    void setDataScore(ScoreManager*);
+    ScoreManager *getDataScore();
+    void setDataScore(ScoreManager *);
     // METHOD
     // General
     void loadData();
     // Student
-    void studentViewYourScoreboard(Person *); // Done
-    void studentViewYourListCourse(Person *); // Done
-    void studentCourseRegistration(Person *, string); //Done
+    void studentViewYourScoreboard(Person *);         // Done
+    void studentViewYourListCourse(Person *);         // Done
+    void studentCourseRegistration(Person *, string); // Done
     // Lecturer
     void lecturerViewScoreboardOfCourse(Person *, Course *); // Done
-    void lecturerUpdateScoreOfStudent(Person *, Score *); //Done
+    void lecturerUpdateScoreOfStudent(Person *, Score *);    // Done
     // Staff
     void staffImportStudentByCSV(Person *, const string &); // Done
     void staffAddStudent(Person *, Person *);               // Done
     void staffEditInformationStudent(Person *, Student *);
     void staffRemoveStudent(Person *, Person *);                       // Done
     void staffTransferStudent(Person *, Person *, Course *, Course *); // Done
-    void staffImportScoreByCSV(Person *, const string &); // Done
-    void staffImportCourseByCSV();
+    void staffImportScoreByCSV(Person *, const string &);              // Done
+    void staffImportLecturerByCSV(Person *, const string &);           // Done
+    void staffImportStaffByCSV(Person *, const string &);              // Done
     void staffCreateCourse();
     void staffAddCourse(Person *, Course *); // Done
     void staffEditInformationCourse(Person *, Course *);
-    void staffRemoveCourse(Person *, Course *); // Done
-    void staffViewListCourses(Person *);   // Done
-    void staffViewListStudents(Person *);  // Done
-    void staffViewListLecturers(Person *); // Done
-    void staffViewListStaffs(Person *);    // Done
+    void staffRemoveCourse(Person *, Course *);            // Done
+    void staffViewListCourses(Person *);                   // Done
+    void staffViewListStudents(Person *);                  // Done
+    void staffViewListLecturers(Person *);                 // Done
+    void staffViewListStaffs(Person *);                    // Done
     void staffViewStudentListOfCourse(Person *, Course *); // Done
-    void exportAttendanceListOfCourse(Course *);    
+    void exportAttendanceListOfCourse(Course *);
 
     void saveData();
 };

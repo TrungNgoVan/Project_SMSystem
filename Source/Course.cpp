@@ -18,7 +18,8 @@ Course::Course()
     this->_dayOfWeek = "Monday";
 }
 
-Course::Course(string courseID, string courseName, string lecturerID){
+Course::Course(string courseID, string courseName, string lecturerID)
+{
     this->_courseID = courseID;
     this->_courseName = courseName;
     this->_lecturerID = lecturerID;
@@ -78,6 +79,7 @@ void Course::displayCourse()
 bool Course::operator==(Course *other)
 {
     bool result = true;
-    if (this->getCourseID() != other->getCourseID()) result = false;
+    if (this->getCourseID() != other->getCourseID())
+        result = false;
     return result;
 }

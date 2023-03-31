@@ -1,6 +1,5 @@
 #pragma once
 #include "Score.h"
-#include "Presence.h"
 #include "Student.h"
 #include "Course.h"
 #include <unordered_set>
@@ -13,7 +12,6 @@ class ScoreManager
 {
 private:
     map<pair<string, string>, Score*> _scoreList;
-    unordered_map<string, Presence*> _presenceList;
 public:
     ScoreManager();
     ~ScoreManager();
@@ -29,6 +27,5 @@ public:
     vector<string> getCoursesIDByStudentID(string);
     void setPresence(Student*, Course*, bool);
     bool isPresenceExist(Student*, Course*);
-
     void displayScoreBoard();
 };

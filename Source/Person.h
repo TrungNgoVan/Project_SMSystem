@@ -2,7 +2,8 @@
 #include <string>
 using namespace std;
 
-enum Type {
+enum Type
+{
     studentCode = 1,
     lecturerCode = 2,
     staffCode = 3
@@ -30,7 +31,6 @@ public:
 
     void setFullName(string);
     string getFullName();
-
 
     void setPhoneNumber(string);
     string getPhoneNumber();

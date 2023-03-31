@@ -2,11 +2,11 @@
 #include <string>
 #include <map>
 #include <unordered_map>
-#include "SchoolManeger.h"
+#include "SchoolManager.h"
 
 using namespace std;
 
-SchoolManager* SchoolManager::_instance = NULL; 
+SchoolManager *SchoolManager::_instance = NULL;
 
 SchoolManager::SchoolManager()
 {
@@ -17,7 +17,7 @@ SchoolManager::SchoolManager()
     this->_dataScore = new ScoreManager();
 }
 
-SchoolManager* SchoolManager::getInstance()
+SchoolManager *SchoolManager::getInstance()
 {
     if (_instance == NULL)
     {
@@ -31,7 +31,8 @@ SchoolManager::~SchoolManager()
     delete this->_dataScore;
 }
 
-void SchoolManager::loadData(){
+void SchoolManager::loadData()
+{
     Lecturer Thao("L1112213"), Vu("L1212321");
     Staff Hai("S1112321"), Long("S1223123");
     Course C1("MTH10405", "DSA", Thao.getID()),
@@ -42,7 +43,8 @@ void SchoolManager::loadData(){
     this->setDataLecturer({{Thao.getID(), Thao}, {Vu.getID(), Vu}});
     this->setDataStaff({{Hai.getID(), Hai}, {Long.getID(), Long}});
     this->staffImportStudentByCSV(&Hai, "../Data/StudentData.csv");
-
+    this->staffImportLecturerByCSV(&Hai, "../Data/LecturerData.csv");
+    this->staffImportStaffByCSV(&Hai, "../Data/StaffData.csv");
 }
 
 map<string, Course> SchoolManager::getDataCourse()
@@ -224,15 +226,18 @@ void SchoolManager::lecturerViewScoreboardOfCourse(Person *lecturer, Course *cou
     }
 }
 
-void SchoolManager::lecturerUpdateScoreOfStudent(Person *lecturer, Score *score){
-    
+void SchoolManager::lecturerUpdateScoreOfStudent(Person *lecturer, Score *score)
+{
+
     cout << "Function: lecturerUpdateScoreOfStudent\n";
     if (lecturer->getType() == Type::lecturerCode)
     {
-        if (this->_dataScore->getScore(score->getStudentID(), score->getCourseID()) == NULL){
+        if (this->_dataScore->getScore(score->getStudentID(), score->getCourseID()) == NULL)
+        {
             this->_dataScore->addScore(score);
         }
-        else {
+        else
+        {
             this->_dataScore->updateScore(score);
         }
     }
@@ -345,6 +350,78 @@ void SchoolManager::staffImportStudentByCSV(Person *staff, const string &fileNam
         cout << "--------------------\n";
     }
     cout << "Done import student!\n";
+    cout << "--------------------\n";
+}
+
+void SchoolManager::staffImportLecturerByCSV(Person *staff, const string &fileName)
+{
+    cout << "Function: staffImportLecturerByCSV\n";
+    if (staff->getType() == Type::staffCode)
+    {
+        cout << "Staff " << staff->getID() << " import lecturer by CSV file!\n";
+        vector<Lecturer *> csv = Helper::readLecturerFileCSV("../Data/LecturerData.csv");
+        for (auto lecturer : csv)
+        {
+            // Add lecturer to data
+            auto it = this->_dataLecturerMap.find(lecturer->getID());
+            if (it == this->_dataLecturerMap.end())
+            {
+                this->_dataLecturerMap.insert(pair<string, Lecturer>(lecturer->getID(), *lecturer));
+            }
+            else
+            {
+                cout << "This lecturer exists!\n";
+            }
+        }
+
+        // delete csv
+        for (auto lecturer : csv)
+        {
+            delete lecturer;
+        }
+    }
+    else
+    {
+        cout << "You can't access!\n";
+        cout << "--------------------\n";
+    }
+    cout << "Done import lecturer!\n";
+    cout << "--------------------\n";
+}
+
+void SchoolManager::staffImportStaffByCSV(Person *staff, const string &fileName)
+{
+    cout << "Function: staffImportStaffByCSV\n";
+    if (staff->getType() == Type::staffCode)
+    {
+        cout << "Staff " << staff->getID() << " import staff by CSV file!\n";
+        vector<Staff *> csv = Helper::readStaffFileCSV("../Data/StaffData.csv");
+        for (auto staff : csv)
+        {
+            // Add staff to data
+            auto it = this->_dataStaffMap.find(staff->getID());
+            if (it == this->_dataStaffMap.end())
+            {
+                this->_dataStaffMap.insert(pair<string, Staff>(staff->getID(), *staff));
+            }
+            else
+            {
+                cout << "This staff exists!\n";
+            }
+        }
+
+        // delete csv
+        for (auto staff : csv)
+        {
+            delete staff;
+        }
+    }
+    else
+    {
+        cout << "You can't access!\n";
+        cout << "--------------------\n";
+    }
+    cout << "Done import staff!\n";
     cout << "--------------------\n";
 }
 

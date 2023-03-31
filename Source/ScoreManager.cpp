@@ -101,22 +101,6 @@ vector<string> ScoreManager::getCoursesIDByStudentID(string studentID)
     return vector<string>(courseList.begin(), courseList.end());
 }
 
-void ScoreManager::setPresence(Student *student, Course *course, bool presence)
-{
-    if (isPresenceExist(student, course))
-    {
-        _presenceList[student->getID() + " " + course->getCourseID()]->setPresence(presence);
-    }
-    else
-    {
-        _presenceList[student->getID() + " " + course->getCourseID()] = new Presence(presence);
-    }
-}
-
-bool ScoreManager::isPresenceExist(Student *student, Course *course)
-{
-    return _presenceList.find(student->getID() + " " + course->getCourseID()) != _presenceList.end();
-}
 
 void ScoreManager::displayScoreBoard()
 {

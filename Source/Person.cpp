@@ -5,7 +5,6 @@ using namespace std;
 
 Person::Person()
 {
-
 }
 
 Person::Person(string userName, string password, string fullName, string email, string phoneNumber)
@@ -19,9 +18,7 @@ Person::Person(string userName, string password, string fullName, string email, 
 
 Person::~Person()
 {
-    
 }
-
 
 string Person::getUserName()
 {
@@ -43,7 +40,7 @@ void Person::setFullName(string fullName)
     this->_fullName = fullName;
 }
 
-int getType() 
+int getType()
 {
     return 0;
 }

@@ -6,7 +6,7 @@
 #include "Helper.h"
 #include "Person.h"
 #include "Score.h"
-#include "SchoolManeger.h"
+#include "SchoolManager.h"
 #include "App.h"
 
 // Const
